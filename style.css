@@ -252,6 +252,44 @@
             text-align: center;
         }
 
-        .high-scores {
-            margin-top: 15px;
-        }
+.high-scores {
+    margin-top: 15px;
+}
+
+@media (max-width: 600px) {
+    :root {
+        --card-width: 70px;
+        --card-height: 100px;
+        --card-font-size: 18px;
+    }
+
+    .game-board {
+        flex-direction: column;
+    }
+
+    .classic-dungeon {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .deck-area {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hand-area {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .damage-area,
+    .inventory-area {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+}
