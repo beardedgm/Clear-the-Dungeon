@@ -16,7 +16,8 @@ const DIAMOND_PATTERN = [1, 2, 3, 2, 1, 2, 3];
                 this.selectedCard = null;
                 this.targetMonster = null;
                 this.attackSlots = {};
-                this.useReserveCard = true; // For classic mode optional rule
+                const reserveToggle = document.getElementById('reserveToggle');
+                this.useReserveCard = reserveToggle ? reserveToggle.checked : true; // For classic mode optional rule
                 
                 this.init();
             }
@@ -28,6 +29,13 @@ const DIAMOND_PATTERN = [1, 2, 3, 2, 1, 2, 3];
                 document.getElementById('drawButton').addEventListener('click', () => this.drawCards());
                 document.getElementById('discardButton').addEventListener('click', () => this.discardRemaining());
                 document.getElementById('playAgainButton').addEventListener('click', () => this.resetGame());
+
+                const reserveToggleEl = document.getElementById('reserveToggle');
+                if (reserveToggleEl) {
+                    reserveToggleEl.addEventListener('change', (e) => {
+                        this.useReserveCard = e.target.checked;
+                    });
+                }
                 
                 // Initial game status
                 this.updateGameStatus("Select a game mode to begin.");
@@ -78,6 +86,10 @@ const DIAMOND_PATTERN = [1, 2, 3, 2, 1, 2, 3];
             
             setupGame(mode) {
                 this.gameMode = mode;
+                const reserveToggle = document.getElementById('reserveToggle');
+                if (reserveToggle) {
+                    this.useReserveCard = reserveToggle.checked;
+                }
                 this.fullDeck = this.createDeck();
                 this.clearPile = [];
                 this.damagePile = [];
