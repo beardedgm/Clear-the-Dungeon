@@ -1,4 +1,6 @@
 // Card game logic
+const DIAMOND_PATTERN = [1, 2, 3, 2, 1, 2, 3];
+
         class DungeonGame {
             constructor() {
                 this.gameMode = null;
@@ -156,7 +158,7 @@
                 const advancedDungeon = document.getElementById('advancedDungeon');
                 
                 // Create diamond pattern
-                const pattern = [1, 2, 3, 2, 1, 2, 3];
+                const pattern = DIAMOND_PATTERN;
                 this.dungeonLayout = [];
                 
                 for (let rowIndex = 0; rowIndex < pattern.length; rowIndex++) {
@@ -673,7 +675,7 @@
                             if (row > 0) {
                                 // Check cards that would cover this one
                                 const prevRow = row - 1;
-                                const pattern = [1, 2, 3, 2, 1, 2, 3]; // Diamond pattern
+                                const pattern = DIAMOND_PATTERN; // Diamond pattern
                                 
                                 // Check if any cards in the row above block this one
                                 for (let c = 0; c < this.dungeonLayout[prevRow].length; c++) {
@@ -714,7 +716,7 @@
                     advancedDungeon.innerHTML = '';
                     
                     // Recreate the diamond pattern
-                    const pattern = [1, 2, 3, 2, 1, 2, 3];
+                    const pattern = DIAMOND_PATTERN;
                     
                     for (let rowIndex = 0; rowIndex < pattern.length; rowIndex++) {
                         const rowDiv = document.createElement('div');
