@@ -1,0 +1,7 @@
+# Ignore macOS and Windows OS files
+.DS_Store
+Thumbs.db
+
+# Ignore node modules and build outputs
+node_modules/
+dist/
