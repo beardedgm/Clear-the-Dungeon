@@ -20,6 +20,7 @@ const DIAMOND_PATTERN = [1, 2, 3, 2, 1, 2, 3];
                 this.useReserveCard = reserveToggle ? reserveToggle.checked : true; // For classic mode optional rule
                 
                 this.init();
+                this.updateHighScoresDisplay();
             }
             
             init() {
@@ -1091,13 +1092,17 @@ const DIAMOND_PATTERN = [1, 2, 3, 2, 1, 2, 3];
                 modalTitle.textContent = isWin ? "Victory!" : "Game Over";
                 modalMessage.textContent = message;
                 
+                let score = null;
                 if (isWin) {
                     // Calculate score for classic mode
                     if (this.gameMode === 'classic') {
-                        const score = this.powerDeck.length;
+                        score = this.powerDeck.length;
                         modalMessage.textContent += ` Your score: ${score} cards remaining.`;
+                        this.saveHighScore(score);
                     }
                 }
+
+                this.updateHighScoresDisplay();
                 
                 modal.style.display = "flex";
                 
@@ -1109,9 +1114,12 @@ const DIAMOND_PATTERN = [1, 2, 3, 2, 1, 2, 3];
             resetGame() {
                 // Hide modal
                 document.getElementById('gameModal').style.display = "none";
-                
+
                 // Reset game state
                 this.setupGame(this.gameMode);
+
+                // Ensure high scores remain visible
+                this.updateHighScoresDisplay();
             }
             
             updateDeckCount() {
@@ -1124,6 +1132,25 @@ const DIAMOND_PATTERN = [1, 2, 3, 2, 1, 2, 3];
             
             updateGameStatus(message) {
                 document.getElementById('gameStatus').textContent = message;
+            }
+
+            saveHighScore(score) {
+                const scores = JSON.parse(localStorage.getItem('highScores') || '[]');
+                scores.push(score);
+                localStorage.setItem('highScores', JSON.stringify(scores));
+            }
+
+            updateHighScoresDisplay() {
+                const container = document.getElementById('highScores');
+                if (!container) return;
+                const scores = JSON.parse(localStorage.getItem('highScores') || '[]');
+                if (scores.length === 0) {
+                    container.innerHTML = '';
+                    return;
+                }
+                scores.sort((a, b) => b - a);
+                const list = scores.map(s => `<li>${s}</li>`).join('');
+                container.innerHTML = `<h3>High Scores</h3><ol>${list}</ol>`;
             }
             
             displayRules() {
